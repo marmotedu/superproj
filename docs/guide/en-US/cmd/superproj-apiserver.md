@@ -1,0 +1,246 @@
+## superproj-apiserver
+
+Launch a superproj API server
+
+### Synopsis
+
+The Cloud Miner API server validates and configures data
+for the api objects which include miners, minersets, configmaps, and
+others. The API Server services REST operations and provides the frontend to the
+superproj's shared state through which all other components interact.
+
+```
+superproj-apiserver [flags]
+```
+
+### Options
+
+```
+      --add_dir_header                                    If true, adds the file directory to the header of the log messages (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --admission-control-config-file string              File with admission control configuration.
+      --advertise-address ip                              The IP address on which to advertise the apiserver to members of the cluster. This address must be reachable by the rest of the cluster. If blank, the --bind-address will be used. If --bind-address is unspecified, the host's default interface will be used.
+      --allow-metric-labels stringToString                The map from metric-label to value allow-list of this label. The key's format is <MetricName>,<LabelName>. The value's format is <allowed_value>,<allowed_value>...e.g. metric1,label1='v1,v2,v3', metric1,label2='v1,v2,v3' metric2,label1='v1,v2,v3'. (default [])
+      --alsologtostderr                                   log to standard error as well as files (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --audit-log-batch-buffer-size int                   The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
+      --audit-log-batch-max-size int                      The maximum size of a batch. Only used in batch mode. (default 1)
+      --audit-log-batch-max-wait duration                 The amount of time to wait before force writing the batch that hadn't reached the max size. Only used in batch mode.
+      --audit-log-batch-throttle-burst int                Maximum number of requests sent at the same moment if ThrottleQPS was not utilized before. Only used in batch mode.
+      --audit-log-batch-throttle-enable                   Whether batching throttling is enabled. Only used in batch mode.
+      --audit-log-batch-throttle-qps float32              Maximum average number of batches per second. Only used in batch mode.
+      --audit-log-compress                                If set, the rotated log files will be compressed using gzip.
+      --audit-log-format string                           Format of saved audits. "legacy" indicates 1-line text format for each event. "json" indicates structured json format. Known formats are legacy,json. (default "json")
+      --audit-log-maxage int                              The maximum number of days to retain old audit log files based on the timestamp encoded in their filename.
+      --audit-log-maxbackup int                           The maximum number of old audit log files to retain. Setting a value of 0 will mean there's no restriction on the number of files.
+      --audit-log-maxsize int                             The maximum size in megabytes of the audit log file before it gets rotated.
+      --audit-log-mode string                             Strategy for sending audit events. Blocking indicates sending events should block server responses. Batch causes the backend to buffer and write events asynchronously. Known modes are batch,blocking,blocking-strict. (default "blocking")
+      --audit-log-path string                             If set, all requests coming to the apiserver will be logged to this file.  '-' means standard out.
+      --audit-log-truncate-enabled                        Whether event and batch truncating is enabled.
+      --audit-log-truncate-max-batch-size int             Maximum size of the batch sent to the underlying backend. Actual serialized size can be several hundreds of bytes greater. If a batch exceeds this limit, it is split into several batches of smaller size. (default 10485760)
+      --audit-log-truncate-max-event-size int             Maximum size of the audit event sent to the underlying backend. If the size of an event is greater than this number, first request and response are removed, and if this doesn't reduce the size enough, event is discarded. (default 102400)
+      --audit-log-version string                          API group and version used for serializing audit events written to log. (default "audit.k8s.io/v1")
+      --audit-policy-file string                          Path to the file that defines the audit policy configuration.
+      --audit-webhook-batch-buffer-size int               The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
+      --audit-webhook-batch-max-size int                  The maximum size of a batch. Only used in batch mode. (default 400)
+      --audit-webhook-batch-max-wait duration             The amount of time to wait before force writing the batch that hadn't reached the max size. Only used in batch mode. (default 30s)
+      --audit-webhook-batch-throttle-burst int            Maximum number of requests sent at the same moment if ThrottleQPS was not utilized before. Only used in batch mode. (default 15)
+      --audit-webhook-batch-throttle-enable               Whether batching throttling is enabled. Only used in batch mode. (default true)
+      --audit-webhook-batch-throttle-qps float32          Maximum average number of batches per second. Only used in batch mode. (default 10)
+      --audit-webhook-config-file string                  Path to a kubeconfig formatted file that defines the audit webhook configuration.
+      --audit-webhook-initial-backoff duration            The amount of time to wait before retrying the first failed request. (default 10s)
+      --audit-webhook-mode string                         Strategy for sending audit events. Blocking indicates sending events should block server responses. Batch causes the backend to buffer and write events asynchronously. Known modes are batch,blocking,blocking-strict. (default "batch")
+      --audit-webhook-truncate-enabled                    Whether event and batch truncating is enabled.
+      --audit-webhook-truncate-max-batch-size int         Maximum size of the batch sent to the underlying backend. Actual serialized size can be several hundreds of bytes greater. If a batch exceeds this limit, it is split into several batches of smaller size. (default 10485760)
+      --audit-webhook-truncate-max-event-size int         Maximum size of the audit event sent to the underlying backend. If the size of an event is greater than this number, first request and response are removed, and if this doesn't reduce the size enough, event is discarded. (default 102400)
+      --audit-webhook-version string                      API group and version used for serializing audit events written to webhook. (default "audit.k8s.io/v1")
+      --authentication-kubeconfig string                  kubeconfig file pointing at the 'core' kubernetes server with enough rights to create tokenreviews.authentication.k8s.io.
+      --authentication-skip-lookup                        If false, the authentication-kubeconfig will be used to lookup missing authentication configuration from the cluster.
+      --authentication-token-webhook-cache-ttl duration   The duration to cache responses from the webhook token authenticator. (default 10s)
+      --authentication-tolerate-lookup-failure            If true, failures to look up missing authentication configuration from the cluster are not considered fatal. Note that this can result in authentication that treats all requests as anonymous.
+      --bind-address ip                                   The IP address on which to listen for the --secure-port port. The associated interface(s) must be reachable by the rest of the cluster, and by CLI/web clients. If blank or an unspecified address (0.0.0.0 or ::), all interfaces will be used. (default 0.0.0.0)
+      --cert-dir string                                   The directory where the TLS certs are located. If --tls-cert-file and --tls-private-key-file are provided, this flag will be ignored. (default "apiserver.local.config/certificates")
+      --client-ca-file string                             If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate.
+  -c, --config FILE                                       Read configuration from specified FILE, support JSON, TOML, YAML, HCL, or Java properties formats.
+      --contention-profiling                              Enable lock contention profiling, if profiling is enabled
+      --cors-allowed-origins strings                      List of allowed origins for CORS, comma separated.  An allowed origin can be a regular expression to support subdomain matching. If this list is empty CORS will not be enabled.
+      --delete-collection-workers int                     Number of workers spawned for DeleteCollection call. These are used to speed up namespace cleanup. (default 1)
+      --disable-admission-plugins strings                 admission plugins that should be disabled although they are in the default enabled plugins list (NamespaceAutoProvision, NamespaceLifecycle). Comma-delimited list of admission plugins: AlwaysAdmit, AlwaysDeny, NamespaceAutoProvision, NamespaceExists, NamespaceLifecycle. The order of plugins in this flag does not matter.
+      --disabled-metrics strings                          This flag provides an escape hatch for misbehaving metrics. You must provide the fully qualified metric name in order to disable it. Disclaimer: disabling metrics is higher in precedence than showing hidden metrics.
+      --egress-selector-config-file string                File with apiserver egress selector configuration.
+      --enable-admission-plugins strings                  admission plugins that should be enabled in addition to default enabled ones (NamespaceAutoProvision, NamespaceLifecycle). Comma-delimited list of admission plugins: AlwaysAdmit, AlwaysDeny, NamespaceAutoProvision, NamespaceExists, NamespaceLifecycle. The order of plugins in this flag does not matter.
+      --enable-garbage-collector                          Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
+      --enable-priority-and-fairness                      If true and the APIPriorityAndFairness feature gate is enabled, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
+      --encryption-provider-config string                 The file containing configuration for encryption providers to be used for storing secrets in etcd
+      --etcd-cafile string                                SSL Certificate Authority file used to secure etcd communication.
+      --etcd-certfile string                              SSL certification file used to secure etcd communication.
+      --etcd-compaction-interval duration                 The interval of compaction requests. If 0, the compaction request from apiserver is disabled. (default 5m0s)
+      --etcd-count-metric-poll-period duration            Frequency of polling etcd for number of resources per type. 0 disables the metric collection. (default 1m0s)
+      --etcd-db-metric-poll-interval duration             The interval of requests to poll etcd and update metric. 0 disables the metric collection (default 30s)
+      --etcd-healthcheck-timeout duration                 The timeout to use when checking etcd health. (default 2s)
+      --etcd-keyfile string                               SSL key file used to secure etcd communication.
+      --etcd-prefix string                                The prefix to prepend to all resource paths in etcd. (default "/registry")
+      --etcd-readycheck-timeout duration                  The timeout to use when checking etcd readiness (default 2s)
+      --etcd-servers strings                              List of etcd servers to connect with (scheme://ip:port), comma separated.
+      --etcd-servers-overrides strings                    Per-resource etcd servers overrides, comma separated. The individual override format: group/resource#servers, where servers are URLs, semicolon separated. Note that this applies only to resources compiled into this server binary. 
+      --event-ttl duration                                Amount of time to retain events. (default 1h0m0s)
+      --external-hostname string                          The hostname to use when generating externalized URLs for this master (e.g. Swagger API Docs or OpenID Discovery).
+      --feature-gates mapStringBool                       A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
+                                                          APIListChunking=true|false (BETA - default=true)
+                                                          APIPriorityAndFairness=true|false (BETA - default=true)
+                                                          APIResponseCompression=true|false (BETA - default=true)
+                                                          APIServerIdentity=true|false (ALPHA - default=false)
+                                                          APIServerTracing=true|false (ALPHA - default=false)
+                                                          AllAlpha=true|false (ALPHA - default=false)
+                                                          AllBeta=true|false (BETA - default=false)
+                                                          AnyVolumeDataSource=true|false (BETA - default=true)
+                                                          AppArmor=true|false (BETA - default=true)
+                                                          CPUManager=true|false (BETA - default=true)
+                                                          CPUManagerPolicyAlphaOptions=true|false (ALPHA - default=false)
+                                                          CPUManagerPolicyBetaOptions=true|false (BETA - default=true)
+                                                          CPUManagerPolicyOptions=true|false (BETA - default=true)
+                                                          CSIMigrationAzureFile=true|false (BETA - default=true)
+                                                          CSIMigrationPortworx=true|false (BETA - default=false)
+                                                          CSIMigrationRBD=true|false (ALPHA - default=false)
+                                                          CSIMigrationvSphere=true|false (BETA - default=true)
+                                                          CSINodeExpandSecret=true|false (ALPHA - default=false)
+                                                          CSIVolumeHealth=true|false (ALPHA - default=false)
+                                                          ContainerCheckpoint=true|false (ALPHA - default=false)
+                                                          ContextualLogging=true|false (ALPHA - default=false)
+                                                          CronJobTimeZone=true|false (BETA - default=true)
+                                                          CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)
+                                                          CustomResourceValidationExpressions=true|false (BETA - default=true)
+                                                          DelegateFSGroupToCSIDriver=true|false (BETA - default=true)
+                                                          DevicePlugins=true|false (BETA - default=true)
+                                                          DisableCloudProviders=true|false (ALPHA - default=false)
+                                                          DisableKubeletCloudCredentialProviders=true|false (ALPHA - default=false)
+                                                          DownwardAPIHugePages=true|false (BETA - default=true)
+                                                          EndpointSliceTerminatingCondition=true|false (BETA - default=true)
+                                                          ExpandedDNSConfig=true|false (ALPHA - default=false)
+                                                          ExperimentalHostUserNamespaceDefaulting=true|false (BETA - default=false)
+                                                          GRPCContainerProbe=true|false (BETA - default=true)
+                                                          GracefulNodeShutdown=true|false (BETA - default=true)
+                                                          GracefulNodeShutdownBasedOnPodPriority=true|false (BETA - default=true)
+                                                          HPAContainerMetrics=true|false (ALPHA - default=false)
+                                                          HPAScaleToZero=true|false (ALPHA - default=false)
+                                                          HonorPVReclaimPolicy=true|false (ALPHA - default=false)
+                                                          IPTablesOwnershipCleanup=true|false (ALPHA - default=false)
+                                                          InTreePluginAWSUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginAzureDiskUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginAzureFileUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginGCEUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginOpenStackUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginPortworxUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginRBDUnregister=true|false (ALPHA - default=false)
+                                                          InTreePluginvSphereUnregister=true|false (ALPHA - default=false)
+                                                          JobMutableNodeSchedulingDirectives=true|false (BETA - default=true)
+                                                          JobPodFailurePolicy=true|false (ALPHA - default=false)
+                                                          JobReadyPods=true|false (BETA - default=true)
+                                                          JobTrackingWithFinalizers=true|false (BETA - default=true)
+                                                          KMSv2=true|false (ALPHA - default=false)
+                                                          KubeletCredentialProviders=true|false (BETA - default=true)
+                                                          KubeletInUserNamespace=true|false (ALPHA - default=false)
+                                                          KubeletPodResources=true|false (BETA - default=true)
+                                                          KubeletPodResourcesGetAllocatable=true|false (BETA - default=true)
+                                                          KubeletTracing=true|false (ALPHA - default=false)
+                                                          LegacyServiceAccountTokenNoAutoGeneration=true|false (BETA - default=true)
+                                                          LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)
+                                                          LogarithmicScaleDown=true|false (BETA - default=true)
+                                                          LoggingAlphaOptions=true|false (ALPHA - default=false)
+                                                          LoggingBetaOptions=true|false (BETA - default=true)
+                                                          MatchLabelKeysInPodTopologySpread=true|false (ALPHA - default=false)
+                                                          MaxUnavailableStatefulSet=true|false (ALPHA - default=false)
+                                                          MemoryManager=true|false (BETA - default=true)
+                                                          MemoryQoS=true|false (ALPHA - default=false)
+                                                          MinDomainsInPodTopologySpread=true|false (BETA - default=false)
+                                                          MixedProtocolLBService=true|false (BETA - default=true)
+                                                          MultiCIDRRangeAllocator=true|false (ALPHA - default=false)
+                                                          NetworkPolicyStatus=true|false (ALPHA - default=false)
+                                                          NodeInclusionPolicyInPodTopologySpread=true|false (ALPHA - default=false)
+                                                          NodeOutOfServiceVolumeDetach=true|false (ALPHA - default=false)
+                                                          NodeSwap=true|false (ALPHA - default=false)
+                                                          OpenAPIEnums=true|false (BETA - default=true)
+                                                          OpenAPIV3=true|false (BETA - default=true)
+                                                          PodAndContainerStatsFromCRI=true|false (ALPHA - default=false)
+                                                          PodDeletionCost=true|false (BETA - default=true)
+                                                          PodDisruptionConditions=true|false (ALPHA - default=false)
+                                                          PodHasNetworkCondition=true|false (ALPHA - default=false)
+                                                          ProbeTerminationGracePeriod=true|false (BETA - default=true)
+                                                          ProcMountType=true|false (ALPHA - default=false)
+                                                          ProxyTerminatingEndpoints=true|false (ALPHA - default=false)
+                                                          QOSReserved=true|false (ALPHA - default=false)
+                                                          ReadWriteOncePod=true|false (ALPHA - default=false)
+                                                          RecoverVolumeExpansionFailure=true|false (ALPHA - default=false)
+                                                          RemainingItemCount=true|false (BETA - default=true)
+                                                          RetroactiveDefaultStorageClass=true|false (ALPHA - default=false)
+                                                          RotateKubeletServerCertificate=true|false (BETA - default=true)
+                                                          SELinuxMountReadWriteOncePod=true|false (ALPHA - default=false)
+                                                          SeccompDefault=true|false (BETA - default=true)
+                                                          ServerSideFieldValidation=true|false (BETA - default=true)
+                                                          ServiceIPStaticSubrange=true|false (BETA - default=true)
+                                                          ServiceInternalTrafficPolicy=true|false (BETA - default=true)
+                                                          SizeMemoryBackedVolumes=true|false (BETA - default=true)
+                                                          StatefulSetAutoDeletePVC=true|false (ALPHA - default=false)
+                                                          StorageVersionAPI=true|false (ALPHA - default=false)
+                                                          StorageVersionHash=true|false (BETA - default=true)
+                                                          TopologyAwareHints=true|false (BETA - default=true)
+                                                          TopologyManager=true|false (BETA - default=true)
+                                                          UserNamespacesStatelessPodsSupport=true|false (ALPHA - default=false)
+                                                          VolumeCapacityPriority=true|false (ALPHA - default=false)
+                                                          WinDSR=true|false (ALPHA - default=false)
+                                                          WinOverlay=true|false (BETA - default=true)
+                                                          WindowsHostProcessContainers=true|false (BETA - default=true)
+      --goaway-chance float                               To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
+  -h, --help                                              help for superproj-apiserver
+      --http2-max-streams-per-connection int              The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default. (default 1000)
+      --lease-reuse-duration-seconds int                  The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
+      --livez-grace-period duration                       This option represents the maximum amount of time it should take for apiserver to complete its startup sequence and become live. From apiserver's start time to when this amount of time has elapsed, /livez will assume that unfinished post-start hooks will complete successfully and therefore return true.
+      --log-flush-frequency duration                      Maximum number of seconds between log flushes (default 5s)
+      --log-json-info-buffer-size quantity                [Alpha] In JSON format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-json-split-stream                             [Alpha] In JSON format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+      --log_backtrace_at traceLocation                    when logging hits line file:N, emit a stack trace (default :0) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --log_dir string                                    If non-empty, write log files in this directory (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --log_file string                                   If non-empty, use this log file (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --log_file_max_size uint                            Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --logging-format string                             Sets the log format. Permitted formats: "json" (gated by LoggingBetaOptions), "text".
+                                                          Non-default formats don't honor these flags: --add-dir-header, --alsologtostderr, --log-backtrace-at, --log-dir, --log-file, --log-file-max-size, --logtostderr, --one-output, --skip-headers, --skip-log-headers, --stderrthreshold, --vmodule.
+                                                          Non-default choices are currently alpha and subject to change without warning. (default "text")
+      --logtostderr                                       log to standard error instead of files (default true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --master-service-namespace string                   DEPRECATED: the namespace from which the Kubernetes master services should be injected into pods. (default "default")
+      --max-mutating-requests-inflight int                This and --max-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of mutating requests in flight, or a zero value disables the limit completely. (default 200)
+      --max-requests-inflight int                         This and --max-mutating-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of non-mutating requests in flight, or a zero value disables the limit completely. (default 400)
+      --min-request-timeout int                           An optional field indicating the minimum number of seconds a handler must keep a request open before timing it out. Currently only honored by the watch request handler, which picks a randomized value above this number as the connection timeout, to spread out load. (default 1800)
+      --one_output                                        If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --permit-address-sharing                            If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]
+      --permit-port-sharing                               If true, SO_REUSEPORT will be used when binding the port, which allows more than one instance to bind on the same address and port. [default=false]
+      --profiling                                         Enable profiling via web interface host:port/debug/pprof/ (default true)
+      --request-timeout duration                          An optional field indicating the duration a handler must keep a request open before timing it out. This is the default request timeout for requests but may be overridden by flags such as --min-request-timeout for specific types of requests. (default 1m0s)
+      --requestheader-allowed-names strings               List of client certificate common names to allow to provide usernames in headers specified by --requestheader-username-headers. If empty, any client certificate validated by the authorities in --requestheader-client-ca-file is allowed.
+      --requestheader-client-ca-file string               Root certificate bundle to use to verify client certificates on incoming requests before trusting usernames in headers specified by --requestheader-username-headers. WARNING: generally do not depend on authorization being already done for incoming requests.
+      --requestheader-extra-headers-prefix strings        List of request header prefixes to inspect. X-Remote-Extra- is suggested. (default [x-remote-extra-])
+      --requestheader-group-headers strings               List of request headers to inspect for groups. X-Remote-Group is suggested. (default [x-remote-group])
+      --requestheader-username-headers strings            List of request headers to inspect for usernames. X-Remote-User is common. (default [x-remote-user])
+      --secure-port int                                   The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
+      --show-hidden-metrics-for-version string            The previous version for which you want to show hidden metrics. Only the previous minor version is meaningful, other values will not be allowed. The format is <major>.<minor>, e.g.: '1.16'. The purpose of this format is make sure you have the opportunity to notice if the next release hides additional metrics, rather than being surprised when they are permanently removed in the release after that.
+      --shutdown-delay-duration duration                  Time to delay the termination. During that time the server keeps serving requests normally. The endpoints /healthz and /livez will return success, but /readyz immediately returns failure. Graceful termination starts after this delay has elapsed. This can be used to allow load balancer to stop sending traffic to this server.
+      --shutdown-send-retry-after                         If true the HTTP Server will continue listening until all non long running request(s) in flight have been drained, during this window all incoming requests will be rejected with a status code 429 and a 'Retry-After' response header, in addition 'Connection: close' response header is set in order to tear down the TCP connection when idle.
+      --skip_headers                                      If true, avoid header prefixes in the log messages (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --skip_log_headers                                  If true, avoid headers when opening log files (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --stderrthreshold severity                          logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+      --storage-backend string                            The storage backend for persistence. Options: 'etcd3' (default).
+      --storage-media-type string                         The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. (default "application/json")
+      --strict-transport-security-directives strings      List of directives for HSTS, comma separated. If this list is empty, then HSTS directives will not be added. Example: 'max-age=31536000,includeSubDomains,preload'
+      --tls-cert-file string                              File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert). If HTTPS serving is enabled, and --tls-cert-file and --tls-private-key-file are not provided, a self-signed certificate and key are generated for the public address and saved to the directory specified by --cert-dir.
+      --tls-cipher-suites strings                         Comma-separated list of cipher suites for the server. If omitted, the default Go cipher suites will be used. 
+                                                          Preferred values: TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_GCM_SHA384. 
+                                                          Insecure values: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_RC4_128_SHA.
+      --tls-min-version string                            Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13
+      --tls-private-key-file string                       File containing the default x509 private key matching --tls-cert-file.
+      --tls-sni-cert-key namedCertKey                     A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com". (default [])
+      --tracing-config-file string                        File with apiserver tracing configuration.
+  -v, --v Level                                           number for the log level verbosity
+      --version version[=true]                            Print version information and quit
+      --vmodule pattern=N,...                             comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+      --watch-cache                                       Enable watch caching in the apiserver (default true)
+      --watch-cache-sizes strings                         Watch cache size settings for some resources (pods, nodes, etc.), comma separated. The individual setting format: resource[.group]#size, where resource is lowercase plural (no version), group is omitted for resources of apiVersion v1 (the legacy core API) and included for others, and size is a number. This option is only meaningful for resources built into the apiserver, not ones defined by CRDs or aggregated from external servers, and is only consulted if the watch-cache is enabled. The only meaningful size setting to supply here is zero, which means to disable watch caching for the associated resource; all non-zero values are equivalent and mean to not disable watch caching for that resource
+```
+
+###### Auto generated by spf13/cobra on 29-Oct-2022

@@ -1,0 +1,339 @@
+.nh
+.TH SuperProj(1) superproj User Manuals
+Eric Paris
+Jan 2015
+
+.SH NAME
+.PP
+superproj-gw - Launch a superproj gateway server
+
+
+.SH SYNOPSIS
+.PP
+\fBsuperproj-gw\fP [OPTIONS]
+
+
+.SH DESCRIPTION
+.PP
+The gateway server is the back-end portal server of superproj. All
+requests from the front-end will arrive at the gateway, requests will be uniformly processed
+and distributed by the gateway.
+
+
+.SH OPTIONS
+.PP
+\fB--add_dir_header\fP=false
+	If true, adds the file directory to the header of the log messages
+
+.PP
+\fB--alsologtostderr\fP=false
+	log to standard error as well as files (no effect when -logtostderr=true)
+
+.PP
+\fB--client.debug\fP=false
+	Enables the debug mode on Resty client.
+
+.PP
+\fB--client.retry-count\fP=3
+	Enables retry on Resty client and allows you to set no. of retry count. Resty uses a Backoff mechanism.
+
+.PP
+\fB--client.timeout\fP=30s
+	Request timeout for client.
+
+.PP
+\fB--client.user-agent\fP="superproj"
+	Used to specify the Resty client User-Agent.
+
+.PP
+\fB-c\fP, \fB--config\fP=""
+	Read configuration from specified \fB\fCFILE\fR, support JSON, TOML, YAML, HCL, or Java properties formats.
+
+.PP
+\fB--consul.addr\fP="127.0.0.1:8500"
+	Addr is the address of the consul server.
+
+.PP
+\fB--consul.scheme\fP="http"
+	Scheme is the URI scheme for the consul server.
+
+.PP
+\fB--db.database\fP=""
+	Database name for the server to use.
+
+.PP
+\fB--db.host\fP="127.0.0.1:3306"
+	MySQL service host address. If left blank, the following related mysql options will be ignored.
+
+.PP
+\fB--db.log-mode\fP=1
+	Specify gorm log level.
+
+.PP
+\fB--db.max-connection-life-time\fP=10s
+	Maximum connection life time allowed to connect to mysql.
+
+.PP
+\fB--db.max-idle-connections\fP=100
+	Maximum idle connections allowed to connect to mysql.
+
+.PP
+\fB--db.max-open-connections\fP=100
+	Maximum open connections allowed to connect to mysql.
+
+.PP
+\fB--db.password\fP=""
+	Password for access to mysql, should be used pair with password.
+
+.PP
+\fB--db.username\fP=""
+	Username for access to mysql service.
+
+.PP
+\fB--enable-tls\fP=false
+	Enable TLS for grpc server.
+
+.PP
+\fB--etcd.ca-cert\fP=""
+	Path to cacert for connecting to etcd cluster.
+
+.PP
+\fB--etcd.cert\fP=""
+	Path to cert file for connecting to etcd cluster.
+
+.PP
+\fB--etcd.endpoints\fP=[]
+	Endpoints of etcd cluster.
+
+.PP
+\fB--etcd.health-beat-iface-name\fP=""
+	health beat registry iface name, such as eth0.
+
+.PP
+\fB--etcd.health-beat-path-pre\fP=""
+	health beat path prefix.
+
+.PP
+\fB--etcd.key\fP=""
+	Path to key file for connecting to etcd cluster.
+
+.PP
+\fB--etcd.lease-expire\fP=5
+	Etcd expire timeout in seconds.
+
+.PP
+\fB--etcd.namespace\fP=""
+	Etcd storage namespace.
+
+.PP
+\fB--etcd.password\fP=""
+	Password of etcd cluster.
+
+.PP
+\fB--etcd.request-timeout\fP=2
+	Etcd request timeout in seconds.
+
+.PP
+\fB--etcd.timeout\fP=5
+	Etcd dial timeout in seconds.
+
+.PP
+\fB--etcd.use-tls\fP=false
+	Use tls transport to connect etcd cluster.
+
+.PP
+\fB--etcd.username\fP=""
+	Username of etcd cluster.
+
+.PP
+\fB--feature-gates\fP=
+	A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
+AllAlpha=true|false (ALPHA - default=false)
+AllBeta=true|false (BETA - default=false)
+ContextualLogging=true|false (ALPHA - default=false)
+LoggingAlphaOptions=true|false (ALPHA - default=false)
+LoggingBetaOptions=true|false (BETA - default=true)
+MachinePool=true|false (ALPHA - default=false)
+
+.PP
+\fB--grpc.bind-address\fP="0.0.0.0"
+	The IP address on which to serve the --grpc.bind-port(set to 0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces).
+
+.PP
+\fB--grpc.bind-port\fP=8081
+	The port on which to serve unsecured, unauthenticated grpc access. It is assumed that firewall rules are set up such that this port is not reachable from outside of the deployed machine and that port 443 on the iam public address is proxied to this port. This is performed by nginx in the default setup. Set to zero to disable.
+
+.PP
+\fB--grpc.max-msg-size\fP=4194304
+	gRPC max message size.
+
+.PP
+\fB-h\fP, \fB--help\fP=false
+	help for superproj-gw
+
+.PP
+\fB--insecure.bind-address\fP="127.0.0.1"
+	The IP address on which to serve the --insecure.bind-port (set to 0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces).
+
+.PP
+\fB--insecure.bind-port\fP=8080
+	The port on which to serve unsecured, unauthenticated access. It is assumed that firewall rules are set up such that this port is not reachable from outside of the deployed machine and that port 443 on the iam public address is proxied to this port. This is performed by nginx in the default setup. Set to zero to disable.
+
+.PP
+\fB--jaeger.server\fP="http://127.0.0.1:14268/api/traces"
+	Server is the url of the Jaeger server.
+
+.PP
+\fB--jaeger.service-name\fP=""
+	Specify the service name for jaeger resource.
+
+.PP
+\fB--jwt.expired\fP=2h0m0s
+	JWT token expiration time.
+
+.PP
+\fB--jwt.key\fP="superproj666"
+	Private key used to sign jwt token.
+
+.PP
+\fB--jwt.max-refresh\fP=2h0m0s
+	This field allows clients to refresh their token until MaxRefresh has passed.
+
+.PP
+\fB--jwt.signing-method\fP="HS512"
+	JWT token signature method.
+
+.PP
+\fB--kubeconfig\fP=""
+	Path to kubeconfig file with authorization and master location information.
+
+.PP
+\fB--log-flush-frequency\fP=5s
+	Maximum number of seconds between log flushes
+
+.PP
+\fB--log-json-info-buffer-size\fP=0
+	[Alpha] In JSON format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+
+.PP
+\fB--log-json-split-stream\fP=false
+	[Alpha] In JSON format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+
+.PP
+\fB--log_backtrace_at\fP=:0
+	when logging hits line file:N, emit a stack trace
+
+.PP
+\fB--log_dir\fP=""
+	If non-empty, write log files in this directory (no effect when -logtostderr=true)
+
+.PP
+\fB--log_file\fP=""
+	If non-empty, use this log file (no effect when -logtostderr=true)
+
+.PP
+\fB--log_file_max_size\fP=1800
+	Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited.
+
+.PP
+\fB--logging-format\fP="text"
+	Sets the log format. Permitted formats: "json" (gated by LoggingBetaOptions), "text".
+Non-default formats don't honor these flags: --add-dir-header, --alsologtostderr, --log-backtrace-at, --log-dir, --log-file, --log-file-max-size, --logtostderr, --one-output, --skip-headers, --skip-log-headers, --stderrthreshold, --vmodule.
+Non-default choices are currently alpha and subject to change without warning.
+
+.PP
+\fB--logtostderr\fP=true
+	log to standard error instead of files
+
+.PP
+\fB--metrics.allow-metric-labels\fP=[]
+	The map from metric-label to value allow-list of this label. The key's format is ,\&. The value's format is ,\&...e.g. metric1,label1='v1,v2,v3', metric1,label2='v1,v2,v3' metric2,label1='v1,v2,v3'.
+
+.PP
+\fB--metrics.disabled-metrics\fP=[]
+	This flag provides an escape hatch for misbehaving metrics. You must provide the fully qualified metric name in order to disable it. Disclaimer: disabling metrics is higher in precedence than showing hidden metrics.
+
+.PP
+\fB--metrics.show-hidden-metrics-for-version\fP=""
+	The previous version for which you want to show hidden metrics. Only the previous minor version is meaningful, other values will not be allowed. The format is \&., e.g.: '1.16'. The purpose of this format is make sure you have the opportunity to notice if the next release hides additional metrics, rather than being surprised when they are permanently removed in the release after that.
+
+.PP
+\fB--one_output\fP=false
+	If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+
+.PP
+\fB--redis.addr\fP="127.0.0.1:6379"
+	Address of your Redis server(ip:port).
+
+.PP
+\fB--redis.database\fP=0
+	Database to be selected after connecting to the server.
+
+.PP
+\fB--redis.max-retries\fP=3
+	Maximum number of retries before giving up.
+
+.PP
+\fB--redis.password\fP=""
+	Optional auth password for Redis db.
+
+.PP
+\fB--redis.timeout\fP=5s
+	Timeout when connecting to redis service.
+
+.PP
+\fB--redis.username\fP=""
+	Username for access to redis service.
+
+.PP
+\fB--secure.bind-address\fP="0.0.0.0"
+	The IP address on which to listen for the --secure.bind-port port. The associated interface(s) must be reachable by the rest of the engine, and by CLI/web clients. If blank, all interfaces will be used (0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces).
+
+.PP
+\fB--secure.bind-port\fP=8443
+	The port on which to serve HTTPS with authentication and authorization. It cannot be switched off with 0.
+
+.PP
+\fB--secure.tls.cert-dir\fP="/var/run/iam"
+	The directory where the TLS certs are located. If --secure.tls.cert-key.cert-file and --secure.tls.cert-key.private-key-file are provided, this flag will be ignored.
+
+.PP
+\fB--secure.tls.cert-key.cert-file\fP=""
+	File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert).
+
+.PP
+\fB--secure.tls.cert-key.private-key-file\fP=""
+	File containing the default x509 private key matching --secure.tls.cert-key.cert-file.
+
+.PP
+\fB--secure.tls.pair-name\fP="iam"
+	The name which will be used with --secure.tls.cert-dir to make a cert and key filenames. It becomes /\&.crt and /\&.key
+
+.PP
+\fB--skip_headers\fP=false
+	If true, avoid header prefixes in the log messages
+
+.PP
+\fB--skip_log_headers\fP=false
+	If true, avoid headers when opening log files (no effect when -logtostderr=true)
+
+.PP
+\fB--stderrthreshold\fP=2
+	logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false)
+
+.PP
+\fB-v\fP, \fB--v\fP=0
+	number for the log level verbosity
+
+.PP
+\fB--version\fP=false
+	Print version information and quit
+
+.PP
+\fB--vmodule\fP=
+	comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+
+
+.SH HISTORY
+.PP
+January 2015, Originally compiled by Eric Paris (eparis at redhat dot com) based on the marmotedu source material, but hopefully they have been automatically generated since!
